@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CertIQ — Cybersecurity Certification Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --paper: #FBFAF7;
+    --ink: #1A1814;
+    --ink-soft: #4A453E;
+    --muted: #837C70;
+    --line: #D8D2C4;
+    --line-soft: #E8E3D6;
+    --accent: #8B3A2F;
+    --accent-soft: #F4E9E4;
+    --table-stripe: #F3F1EA;
+    --serif: 'Source Serif 4', Georgia, serif;
+    --sans: 'Inter', -apple-system, sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.5;
+  }
+
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* MASTHEAD */
+  .masthead {
+    border-bottom: 3px solid var(--ink);
+    padding: 36px 0 18px;
+  }
+
+  .masthead-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 22px;
+  }
+
+  .kicker {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .issue-info {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  .masthead h1 {
+    font-family: var(--serif);
+    font-size: 2.6rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.08;
+    margin-bottom: 12px;
+    max-width: 680px;
+  }
+
+  .masthead .dek {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--ink-soft);
+    max-width: 600px;
+    line-height: 1.5;
+  }
+
+  /* SUMMARY STATS */
+  .summary-bar {
+    display: flex;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin: 24px 0 0;
+  }
+
+  .summary-cell {
+    flex: 1;
+    padding: 16px 20px;
+    border-right: 1px solid var(--line);
+  }
+  .summary-cell:last-child { border-right: none; }
+
+  .summary-num {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .summary-label {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* TOC */
+  .toc {
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 8px;
+  }
+
+  .toc-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+
+  .toc-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 0;
+    font-family: var(--sans);
+    font-size: 0.88rem;
+  }
+
+  .toc-links a {
+    color: var(--ink);
+    text-decoration: none;
+    padding: 4px 14px 4px 0;
+    border-right: 1px solid var(--line);
+    margin-right: 14px;
+  }
+  .toc-links a:last-child { border-right: none; }
+  .toc-links a:hover { color: var(--accent); text-decoration: underline; }
+
+  /* SECTIONS */
+  .report-section {
+    padding: 38px 0 6px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .section-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+
+  .report-section h2 {
+    font-family: var(--serif);
+    font-size: 1.7rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+
+  .section-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+
+  .section-desc {
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .n-badge {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    padding: 2px 9px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  /* TABLE */
+  table.report-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 4px 0 28px;
+  }
+
+  table.report-table thead th {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+    text-align: left;
+    padding: 9px 12px;
+    border-bottom: 2px solid var(--ink);
+  }
+  table.report-table thead th.num { text-align: right; }
+
+  table.report-table tbody tr:nth-child(odd) { background: var(--table-stripe); }
+  table.report-table tbody td {
+    padding: 11px 12px;
+    border-bottom: 1px solid var(--line-soft);
+    font-size: 0.88rem;
+    vertical-align: top;
+  }
+  table.report-table tbody td.num { text-align: right; font-family: var(--mono); font-size: 0.84rem; }
+
+  .rank-num {
+    font-family: var(--serif);
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 0.95rem;
+  }
+
+  .cert-name { font-weight: 600; font-size: 0.92rem; }
+  .cert-full { color: var(--muted); font-size: 0.76rem; margin-top: 1px; }
+
+  .bar-cell { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+  .bar-track { width: 70px; height: 7px; background: var(--line-soft); position: relative; }
+  .bar-fill { height: 100%; background: var(--accent); opacity: 0.75; }
+
+  .low-conf-flag {
+    font-size: 0.66rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* METHODOLOGY */
+  .methodology {
+    padding: 38px 0 50px;
+  }
+
+  .methodology h2 {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+  }
+
+  .methodology p {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    margin-bottom: 14px;
+    max-width: 700px;
+  }
+
+  .methodology p strong { color: var(--ink); }
+  .methodology code {
+    font-family: var(--mono);
+    background: var(--accent-soft);
+    padding: 1px 6px;
+    border-radius: 2px;
+    font-size: 0.85em;
+    color: var(--accent);
+  }
+
+  .pullquote {
+    border-left: 3px solid var(--accent);
+    padding: 4px 0 4px 20px;
+    margin: 20px 0;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.02rem;
+    color: var(--ink-soft);
+    max-width: 600px;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 3px solid var(--ink);
+    padding: 22px 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .footer-name {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 3px;
+  }
+
+  .footer-cred {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  .footer-source {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  .footer-source a { color: var(--accent); text-decoration: none; }
+  .footer-source a:hover { text-decoration: underline; }
+
+  @media (max-width: 640px) {
+    .page { padding: 0 18px; }
+    .masthead { padding: 26px 0 14px; }
+    .masthead h1 { font-size: 1.9rem; }
+    .masthead-top { flex-direction: column; gap: 8px; }
+    .issue-info { text-align: left; }
+    .summary-bar { flex-wrap: wrap; }
+    .summary-cell { flex: 1 1 50%; border-bottom: 1px solid var(--line); }
+    table.report-table { font-size: 0.8rem; }
+    .bar-track { width: 40px; }
+    footer { flex-direction: column; }
+    .footer-source { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="masthead">
+    <div class="masthead-top">
+      <div class="kicker">Field Report</div>
+      <div class="issue-info">Issue 01 · June 2026</div>
+    </div>
+    <h1>Which Cybersecurity Certification Actually Gets You Hired?</h1>
+    <p class="dek">A breakdown of 914 real cybersecurity job postings, sorted by domain, to show which certifications employers are actually asking for — and what they pay.</p>
+
+    <div class="summary-bar">
+      <div class="summary-cell">
+        <div class="summary-num">914</div>
+        <div class="summary-label">Postings Analyzed</div>
+      </div>
+      <div class="summary-cell">
+        <div class="summary-num">32</div>
+        <div class="summary-label">Certifications Tracked</div>
+      </div>
+      <div class="summary-cell">
+        <div class="summary-num">32%</div>
+        <div class="summary-label">Disclosed Salary</div>
+      </div>
+      <div class="summary-cell">
+        <div class="summary-num">7</div>
+        <div class="summary-label">Job Domains</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-label">In this report</div>
+    <div class="toc-links" id="tocLinks"></div>
+  </div>
+
+  <div id="sections"></div>
+
+  <div class="methodology">
+    <h2>Methodology</h2>
+    <p>
+      This report is built from <strong>914 unique, deduplicated job postings</strong> pulled live from Indeed, LinkedIn, and
+      ZipRecruiter via the JSearch API, across 47 targeted searches — things like "SOC analyst," "cloud security architect,"
+      "GRC analyst," and "Okta engineer identity." Each posting was assigned to one of seven domain categories based on the
+      search that surfaced it, then scanned for certification mentions against a list of 32 cybersecurity certifications.
+    </p>
+    <p>
+      <strong>Mentions</strong> counts how many postings within a category reference a given certification, as required or
+      preferred. <strong>Average salary</strong> is calculated only from postings that disclosed a pay range — that was true
+      for 32% of postings overall, in line with general US job market disclosure rates. Wherever fewer than three postings
+      disclosed salary for a given certification, the figure is marked <em>directional</em> rather than treated as a reliable average.
+    </p>
+    <div class="pullquote">
+      Two certifications — Okta Certified and SailPoint Certified — showed real demand (8 and 6 mentions) but zero disclosed
+      salary data. Vendor-specific identity certifications simply don't appear in salary-disclosed postings at meaningful
+      volume in this dataset.
+    </div>
+    <p>
+      <strong>What this isn't:</strong> a comprehensive labor market census. Lightcast and the Bureau of Labor Statistics
+      draw on millions of postings; this report draws on under a thousand. That's enough to establish reliable
+      <em>relative</em> ranking within a category — which certification shows up more often than another — but small gaps
+      (18 mentions vs. 20) shouldn't be read as statistically meaningful. Every category here sits between 77 and 184
+      postings, which I consider the floor for a ranking worth publishing.
+    </p>
+    <p>
+      Data pulled <code>June 2026</code>. This is a static snapshot, not a live feed.
+    </p>
+  </div>
+
+  <footer>
+    <div>
+      <div class="footer-name">Tyler Sibley</div>
+      <div class="footer-cred">Okta Certified Professional · AWS Certified · tylersibley.dev</div>
+    </div>
+    <div class="footer-source">
+      Source: JSearch API (Indeed / LinkedIn / ZipRecruiter)<br>
+      <a href="https://tylersibley.dev">tylersibley.dev</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+const CATEGORIES = {
+  overall: {
+    label: "Overall Ranking",
+    desc: "Combined ranking across all 914 postings and all seven domains.",
+    n: 914,
+    certs: [
+      {name:"CISSP", full:"Certified Information Systems Security Professional", mentions:218, salary:151477, salN:54},
+      {name:"Security+", full:"CompTIA Security+", mentions:119, salary:102822, salN:32},
+      {name:"CISM", full:"Certified Information Security Manager", mentions:107, salary:175962, salN:23},
+      {name:"CISA", full:"Certified Information Systems Auditor", mentions:99, salary:165778, salN:22},
+      {name:"CEH", full:"Certified Ethical Hacker", mentions:75, salary:126157, salN:22},
+      {name:"OSCP", full:"Offensive Security Certified Professional", mentions:57, salary:149500, salN:15},
+      {name:"CCSP", full:"Certified Cloud Security Professional", mentions:54, salary:138519, salN:15},
+      {name:"CRISC", full:"Certified in Risk & Information Systems Control", mentions:52, salary:192816, salN:11},
+      {name:"GCIH", full:"GIAC Certified Incident Handler", mentions:45, salary:122309, salN:15},
+      {name:"CySA+", full:"CompTIA Cybersecurity Analyst+", mentions:36, salary:120125, salN:16},
+    ]
+  },
+  iam: {
+    label: "Identity & Access Management",
+    desc: "Okta, identity governance, privileged access management roles.",
+    n: 172,
+    certs: [
+      {name:"CISSP", full:"Certified Information Systems Security Professional", mentions:19, salary:151477, salN:6},
+      {name:"Security+", full:"CompTIA Security+", mentions:16, salary:102822, salN:5},
+      {name:"Okta Certified", full:"Okta Certified Professional / Administrator", mentions:8, salary:null, salN:0},
+      {name:"SailPoint Certified", full:"SailPoint IdentityNow / IdentityIQ Certified Engineer", mentions:6, salary:null, salN:0},
+      {name:"CISA", full:"Certified Information Systems Auditor", mentions:6, salary:165778, salN:2},
+      {name:"CISM", full:"Certified Information Security Manager", mentions:5, salary:175962, salN:2},
+      {name:"GSEC", full:"GIAC Security Essentials", mentions:4, salary:85771, salN:1},
+      {name:"CySA+", full:"CompTIA Cybersecurity Analyst+", mentions:4, salary:120125, salN:1},
+      {name:"SC-300", full:"Microsoft Identity and Access Administrator", mentions:4, salary:138500, salN:1},
+      {name:"CCNA", full:"Cisco Certified Network Associate", mentions:3, salary:102174, salN:1},
+    ]
+  },
+  cloud: {
+    label: "Cloud Security",
+    desc: "AWS, Azure, and GCP security architecture and engineering roles.",
+    n: 153,
+    certs: [
+      {name:"CISSP", full:"Certified Information Systems Security Professional", mentions:37, salary:151477, salN:9},
+      {name:"AWS Security Specialty", full:"AWS Certified Security – Specialty", mentions:22, salary:163670, salN:7},
+      {name:"Security+", full:"CompTIA Security+", mentions:20, salary:102822, salN:6},
+      {name:"CCSP", full:"Certified Cloud Security Professional", mentions:19, salary:138519, salN:6},
+      {name:"CISM", full:"Certified Information Security Manager", mentions:11, salary:175962, salN:3},
+      {name:"AWS Solutions Architect", full:"AWS Certified Solutions Architect", mentions:9, salary:125347, salN:3},
+      {name:"SC-200", full:"Microsoft Security Operations Analyst", mentions:7, salary:108000, salN:2},
+      {name:"CISA", full:"Certified Information Systems Auditor", mentions:6, salary:165778, salN:2},
+      {name:"SC-100", full:"Microsoft Cybersecurity Architect Expert", mentions:6, salary:228000, salN:2},
+      {name:"AZ-500", full:"Microsoft Azure Security Engineer Associate", mentions:6, salary:224250, salN:2},
+    ]
+  },
+  pentest: {
+    label: "Offensive Security & Pentest",
+    desc: "Red team, penetration testing, and threat hunting roles.",
+    n: 102,
+    certs: [
+      {name:"OSCP", full:"Offensive Security Certified Professional", mentions:47, salary:149500, salN:15},
+      {name:"CEH", full:"Certified Ethical Hacker", mentions:34, salary:126157, salN:22},
+      {name:"CISSP", full:"Certified Information Systems Security Professional", mentions:23, salary:151477, salN:9},
+      {name:"GPEN", full:"GIAC Penetration Tester", mentions:21, salary:144625, salN:8},
+      {name:"GCIH", full:"GIAC Certified Incident Handler", mentions:13, salary:122309, salN:5},
+      {name:"Security+", full:"CompTIA Security+", mentions:12, salary:102822, salN:4},
+      {name:"CySA+", full:"CompTIA Cybersecurity Analyst+", mentions:10, salary:120125, salN:3},
+      {name:"CASP+", full:"CompTIA Advanced Security Practitioner+", mentions:8, salary:146954, salN:3},
+      {name:"GWAPT", full:"GIAC Web Application Penetration Tester", mentions:8, salary:142333, salN:3},
+      {name:"PenTest+", full:"CompTIA PenTest+", mentions:7, salary:157500, salN:3},
+    ]
+  },
+  grc: {
+    label: "Governance, Risk & Compliance",
+    desc: "Audit, privacy, and regulatory compliance roles.",
+    n: 184,
+    certs: [
+      {name:"CISSP", full:"Certified Information Systems Security Professional", mentions:65, salary:151477, salN:18},
+      {name:"CISA", full:"Certified Information Systems Auditor", mentions:58, salary:165778, salN:14},
+      {name:"CISM", full:"Certified Information Security Manager", mentions:43, salary:175962, salN:13},
+      {name:"CRISC", full:"Certified in Risk & Information Systems Control", mentions:36, salary:192816, salN:9},
+      {name:"Security+", full:"CompTIA Security+", mentions:32, salary:102822, salN:9},
+      {name:"CIPP", full:"Certified Information Privacy Professional", mentions:14, salary:153312, salN:2},
+      {name:"ISO 27001 Lead", full:"ISO/IEC 27001 Lead Implementer/Auditor", mentions:13, salary:178167, salN:3},
+      {name:"CCSP", full:"Certified Cloud Security Professional", mentions:13, salary:138519, salN:4},
+      {name:"CEH", full:"Certified Ethical Hacker", mentions:7, salary:126157, salN:2},
+      {name:"PMP", full:"Project Management Professional", mentions:4, salary:155250, salN:1},
+    ]
+  },
+  mgmt: {
+    label: "Security Management",
+    desc: "CISO, director, and security program leadership roles.",
+    n: 94,
+    certs: [
+      {name:"CISSP", full:"Certified Information Systems Security Professional", mentions:35, salary:151477, salN:11},
+      {name:"CISM", full:"Certified Information Security Manager", mentions:29, salary:175962, salN:9},
+      {name:"CRISC", full:"Certified in Risk & Information Systems Control", mentions:15, salary:192816, salN:4},
+      {name:"CISA", full:"Certified Information Systems Auditor", mentions:15, salary:165778, salN:4},
+      {name:"PMP", full:"Project Management Professional", mentions:10, salary:155250, salN:2},
+      {name:"CCSP", full:"Certified Cloud Security Professional", mentions:9, salary:138519, salN:3},
+      {name:"ISO 27001 Lead", full:"ISO/IEC 27001 Lead Implementer/Auditor", mentions:3, salary:178167, salN:1},
+      {name:"OSCP", full:"Offensive Security Certified Professional", mentions:3, salary:149500, salN:1},
+      {name:"GSEC", full:"GIAC Security Essentials", mentions:2, salary:null, salN:0},
+      {name:"ITIL", full:"ITIL Foundation", mentions:2, salary:85500, salN:1},
+    ]
+  },
+  entry: {
+    label: "Entry-Level",
+    desc: "SOC analyst, junior analyst, and first-role positions.",
+    n: 77,
+    certs: [
+      {name:"Security+", full:"CompTIA Security+", mentions:21, salary:74803, salN:8},
+      {name:"CEH", full:"Certified Ethical Hacker", mentions:16, salary:82376, salN:6},
+      {name:"CISSP", full:"Certified Information Systems Security Professional", mentions:14, salary:90955, salN:5},
+      {name:"GCIH", full:"GIAC Certified Incident Handler", mentions:11, salary:81000, salN:4},
+      {name:"GSEC", full:"GIAC Security Essentials", mentions:9, salary:71800, salN:3},
+      {name:"CISM", full:"Certified Information Security Manager", mentions:8, salary:94110, salN:3},
+      {name:"CySA+", full:"CompTIA Cybersecurity Analyst+", mentions:7, salary:69000, salN:3},
+      {name:"SSCP", full:"Systems Security Certified Practitioner", mentions:4, salary:66217, salN:1},
+      {name:"GPEN", full:"GIAC Penetration Tester", mentions:3, salary:null, salN:0},
+      {name:"CISA", full:"Certified Information Systems Auditor", mentions:2, salary:98095, salN:1},
+    ]
+  }
+};
+
+function formatSalary(c) {
+  if (!c.salary) return '<span style="color:#837C70">—</span>';
+  const val = "$" + Math.round(c.salary / 1000) + "K";
+  if (c.salN < 3) {
+    return `${val} <span class="low-conf-flag">(directional, n=${c.salN})</span>`;
+  }
+  return val;
+}
+
+function renderSection(key, cat, index) {
+  const maxMentions = Math.max(...cat.certs.map(c => c.mentions));
+  const rows = cat.certs.map((c, i) => {
+    const barPct = (c.mentions / maxMentions) * 100;
+    return `
+      <tr>
+        <td class="rank-num">${i+1}</td>
+        <td>
+          <div class="cert-name">${c.name}</div>
+          <div class="cert-full">${c.full}</div>
+        </td>
+        <td class="num">
+          <div class="bar-cell">
+            <div class="bar-track"><div class="bar-fill" style="width:${barPct}%"></div></div>
+            ${c.mentions}
+          </div>
+        </td>
+        <td class="num">${formatSalary(c)}</td>
+      </tr>
+    `;
+  }).join("");
+
+  return `
+    <div class="report-section" id="sec-${key}">
+      <div class="section-eyebrow">Section ${String(index+1).padStart(2,"0")}</div>
+      <h2>${cat.label}</h2>
+      <div class="section-meta">
+        <span class="section-desc">${cat.desc}</span>
+        <span class="n-badge">n = ${cat.n} postings</span>
+      </div>
+      <table class="report-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Certification</th>
+            <th class="num">Mentions</th>
+            <th class="num">Avg. Salary</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  `;
+}
+
+function init() {
+  const keys = Object.keys(CATEGORIES);
+  document.getElementById("tocLinks").innerHTML = keys.map(k =>
+    `<a href="#sec-${k}">${CATEGORIES[k].label}</a>`
+  ).join("");
+  document.getElementById("sections").innerHTML = keys.map((k, i) =>
+    renderSection(k, CATEGORIES[k], i)
+  ).join("");
+}
+init();
+</script>
+</body>
+</html>

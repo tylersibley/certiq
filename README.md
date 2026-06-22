@@ -2,7 +2,7 @@
 
 A data-driven report ranking cybersecurity certifications by real employer demand and salary, broken out across seven job domains (IAM, Cloud Security, Pentest, GRC, Management, Entry-Level, and Overall).
 
-**[Live report →](https://tylersibley.dev/certiq)** https://tylersibley.dev/certiq
+**[Live report →](https://tylersibley.dev/certiq)** (https://tylersibley.github.io/certiq/)
 
 ## What this is
 
